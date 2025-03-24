@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="resources/images/LogoBGRemove.png" type="image/x-icon">
+    <title>MeetHive - Student Committee</title>
+    <style>
+        :root {
+            --primary-black: #212121;
+            --primary-orange: #FF5722;
+            --primary-white: #FFFFFF;
+            --secondary-blue: #03A9F4;
+            --secondary-green: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            padding: 1rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-svg {
+            width: 100px;
+            height: 100px;
+        }
+
+        nav {
+            background-color: var(--primary-orange);
+            padding: 1rem 0;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-black);
+        }
+
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('resources/images/BannerImage.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            color: var(--primary-white);
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-orange);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-orange);
+            color: var(--primary-white);
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-black);
+        }
+
+        .features {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--primary-black);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-orange);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            flex: 1 1 300px;
+            background-color: var(--primary-white);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blue-icon {
+            color: var(--secondary-blue);
+        }
+
+        .green-icon {
+            color: var(--secondary-green);
+        }
+
+        .orange-icon {
+            color: var(--primary-orange);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .committees {
+            background-color: #f5f5f5;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .committees-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .committee-card {
+            flex: 1 1 300px;
+            background-color: var(--primary-white);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .committee-img {
+            height: 200px;
+            background-color: #ddd;
+        }
+        #Academic{
+            background-image: url("resources/images/Acodemic.jpg");
+        }
+        #Student{
+            background-image: url("resources/images/StudentWel.jpg");
+        }
+        #Events{
+            background-image: url("resources/images/Event.jpg");
+        }
+        .committee-info {
+            padding: 1.5rem;
+        }
+
+
+        .committee-info h3 {
+            color: var(--primary-black);
+            margin-bottom: 0.5rem;
+        }
+
+        .committee-info p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .login-section {
+            padding: 4rem 1rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-black), #424242);
+            color: var(--primary-white);
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--primary-white);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: var(--primary-black);
+        }
+
+        .login-btn {
+            background-color: var(--primary-orange);
+            border: none;
+            color: var(--primary-white);
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-black);
+        }
+
+        footer {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .social-icons {
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            color: var(--primary-white);
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-orange);
+        }
+
+        .footer-links {
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: var(--primary-white);
+            margin: 0 0.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo-container">
+        <img class="logo-svg" src="resources/images/LogoBGRemove.png">
+    </div>
+    <h1>MeetHive</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#committees">Committees</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+</nav>
+
+<section id="home" class="hero">
+    <h1>Welcome to MeetHive</h1>
+    <p>Empowering student voices, fostering leadership, and creating a vibrant campus community through collaboration and initiative.</p>
+    <a href="#login" class="btn">Login to Your Account</a>
+</section>
+
+<section id="about" class="features">
+    <h2 class="section-title">What We Do</h2>
+    <div class="features-container">
+        <div class="feature-card">
+            <div class="feature-icon blue-icon">👥</div>
+            <h3>Represent Students</h3>
+            <p>We advocate for student needs and ensure your voice is heard in important campus decisions.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon green-icon">🎓</div>
+            <h3>Create Opportunities</h3>
+            <p>We organize events, workshops, and initiatives that enhance your academic and personal growth.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon orange-icon">🤝</div>
+            <h3>Build Community</h3>
+            <p>We foster an inclusive environment where students can connect, collaborate, and thrive together.</p>
+        </div>
+    </div>
+</section>
+
+<section id="committees" class="committees">
+    <h2 class="section-title">Our Committees</h2>
+    <div class="committees-container">
+        <div class="committee-card">
+            <div class="committee-img" id="Academic"></div>
+            <div class="committee-info">
+                <h3>Academic Affairs</h3>
+                <p>Focused on improving academic resources and addressing educational concerns.</p>
+                <a href="login.html" class="btn">Learn More</a>
+            </div>
+        </div>
+        <div class="committee-card">
+            <div class="committee-img" id="Events"></div>
+            <div class="committee-info">
+                <h3>Events & Activities</h3>
+                <p>Organizing campus events, cultural programs, and recreational activities.</p>
+                <a href="#login" class="btn">Learn More</a>
+            </div>
+        </div>
+        <div class="committee-card">
+            <div class="committee-img" id="Student"></div>
+            <div class="committee-info">
+                <h3>Student Welfare</h3>
+                <p>Addressing student concerns related to campus facilities and overall wellbeing.</p>
+                <a href="#login" class="btn">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="login" class="login-section">
+    <h2 class="section-title">Member Access</h2>
+    <div class="login-container">
+        <h3>Login to Your Account</h3>
+        <p>Access committee resources, updates, and participate in ongoing initiatives.</p>
+        <a href="login.html"><button class="login-btn">Login Now</button></a>
+    </div>
+</section>
+
+<footer>
+    <div class="social-icons">
+        <a href="#">📱</a>
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+    </div>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+    </div>
+    <p>&copy; 2025 MeetHive. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
