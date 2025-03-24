@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/projectCSS/mainCSS.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h4>Member Portal</h4>
+    </div>
+    <a href="#" id="dashboard" class="active animate__animated animate__fadeInLeft"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="#" id="updateProfile" class="animate__animated animate__fadeInLeft animate-delay-1"><i class="fas fa-user-edit"></i> Update Profile</a>
+    <a href="#" id="membershipFee" class="animate__animated animate__fadeInLeft animate-delay-1"><i class="fas fa-user-edit"></i> Membership Fee</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <h4 class="navbar-brand">Dashboard Overview</h4>
+            <button class="btn btn-logout animate__animated animate__fadeIn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Welcome Card -->
+    <div class="welcome-card animate__animated animate__fadeIn">
+        <h2>Welcome back, John Doe!</h2>
+        <p class="mb-0">Here's what's happening with your account today.</p>
+    </div>
+
+    <!-- Meeting and Events Cards -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="notification-card animate__animated animate__fadeInUp">
+                <div class="card-title" style="color: #1a1d20">
+                    <i class="fas fa-bell"></i> Meeting Notifications
+                    <span class="badge-notification">3 New</span>
+                </div>
+                <div class="notification-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Team Sync</strong>
+                        <p class="mb-0 text-muted">Tomorrow at 10:00 AM | Conference Room</p>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Project Review</strong>
+                        <p class="mb-0 text-muted">Friday at 2:00 PM | Zoom</p>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Monthly All-Hands</strong>
+                        <p class="mb-0 text-muted">Next Monday at 9:00 AM | Main Hall</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="events-card animate__animated animate__fadeInUp animate-delay-1">
+                <div class="card-title" style="color: #1a1d20">
+                    <i class="fas fa-calendar-star"></i> Upcoming Events
+                </div>
+                <div class="event-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <div>
+                        <strong>Leadership Workshop</strong>
+                        <p class="mb-0 text-muted">Nov 20 | 9:00 AM - 12:00 PM</p>
+                    </div>
+                </div>
+                <div class="event-item">
+                    <i class="fas fa-network-wired"></i>
+                    <div>
+                        <strong>Networking Mixer</strong>
+                        <p class="mb-0 text-muted">Nov 25 | 6:00 PM - 9:00 PM</p>
+                    </div>
+                </div>
+                <div class="event-item">
+                    <i class="fas fa-conference"></i>
+                    <div>
+                        <strong>Annual Conference</strong>
+                        <p class="mb-0 text-muted">Dec 15 | All Day</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Member Profile Update-->
+<div class="container" id="profileUpdate">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-0 pt-4">
+                    <h2 class="text-center mb-1">Member Profile Update</h2>
+                    <p class="text-center text-muted mb-0">Please fill in all required fields</p>
+                </div>
+
+                <div class="card-body px-5 pb-4">
+                    <form id="memberForm">
+                        <!-- Member ID -->
+                        <div class="mb-3">
+                            <label for="memberId" class="form-label fw-bold">Member ID</label>
+                            <input type="number" class="form-control" id="memberId" name="memberId" disabled>
+                            <div class="invalid-feedback">Please provide a valid member ID.</div>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label fw-bold">Full Name **</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                            <div class="invalid-feedback">Please provide your full name.</div>
+                        </div>
+
+                        <!-- Birthday -->
+                        <div class="mb-3">
+                            <label for="birthday" class="form-label fw-bold">Birthday*</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday" required>
+                            <div class="invalid-feedback">Please select your date of birth.</div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label fw-bold">Phone Number **</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                            <div class="invalid-feedback">Please provide a valid phone number.</div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mb-4">
+                            <label for="address" class="form-label fw-bold">Address **</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            <div class="invalid-feedback">Please provide your address.</div>
+                        </div>
+
+                        <!-- Form Buttons -->
+                        <div class="d-flex justify-content-between">
+                            <button type="reset" class="btn btn-outline-secondary px-4">Reset</button>
+                            <button type="submit" class="btn btn-primary px-4">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <small class="text-muted">All fields marked with * are required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Member fee Content-->
+<div class="container" id="memberFee">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card payment-card">
+                <div class="card-header">
+                    <h3 class="card-title">Payment Information</h3>
+                    <p class="card-subtitle">Please fill in all required fields</p>
+                </div>
+
+                <div class="card-body">
+                    <form id="paymentForm">
+                        <div class="row g-3">
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label for="description" class="form-label required-field">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                                <div class="invalid-feedback">Please provide a description.</div>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="col-md-6">
+                                <label for="date" class="form-label required-field">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                                <div class="invalid-feedback">Please select a date.</div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="col-md-6">
+                                <label for="paymentMethod" class="form-label required-field">Payment Method</label>
+                                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                                    <option value="" disabled selected>Select payment method</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Debit Card">Debit Card</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a payment method.</div>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="col-12">
+                                <label for="price" class="form-label required-field">Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+                                </div>
+                                <div class="invalid-feedback">Please provide a valid price.</div>
+                            </div>
+
+                            <!-- Form Buttons -->
+                            <div class="col-12 mt-4">
+                                <div class="d-flex justify-content-between">
+                                    <button type="reset" class="btn btn-outline-secondary btn-reset">Reset Form</button>
+                                    <button type="submit" class="btn btn-submit">Submit Payment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/controller/memberDashboard.js"></script>
+</body>
+</html>
