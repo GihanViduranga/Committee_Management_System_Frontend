@@ -2,601 +2,2447 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/projectCSS/mainCSS.css">
+    <title>MeetUpPro Dashboard</title>
+    <link rel="icon" href="resources/images/LogoBGRemove.png" type="image/x-icon">
+    <!-- Add these lines to the <head> section of your HTML -->
+    <meta name="theme-color" content="#4361ee">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css">
+    <!-- <link rel="stylesheet" href="assests/styles/adminContains.css"> -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <meta name="viewport" content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
     <style>
+        /* MeetUpPro Dashboard - Modern Professional Styling */
         :root {
-            --primary-black: #212121;
-            --primary-orange: #FF5722;
-            --primary-white: #FFFFFF;
-            --secondary-blue: #03A9F4;
-            --secondary-green: #4CAF50;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #495057;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --light-color: #f7f7f9;
+            --dark-color: #252733;
+            --text-color: #252733;
+            --text-muted: #6c757d;
+            --border-color: #dfe0eb;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+            --sidebar-width: 240px;
+            --sidebar-collapsed-width: 78px;
         }
 
+        /* Dark Theme Variables */
+        [data-theme="dark"] {
+            --primary-color: #4cc9f0;
+            --secondary-color: #4895ef;
+            --accent-color: #3f37c9;
+            --light-color: #252733;
+            --dark-color: #f7f7f9;
+            --text-color: #f7f7f9;
+            --text-muted: #a4a6b3;
+            --border-color: #393e46;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: color var(--transition-speed), background-color var(--transition-speed);
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            height: 100%;
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed) ease;
+            z-index: 100;
+            padding-top: 10px;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .logo-details {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .logo-details i {
+            font-size: 28px;
+            color: white;
+            min-width: 50px;
+            text-align: center;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .logo_name {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-left: 10px;
+            white-space: nowrap;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .sidebar.active .logo_name {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar .nav-links {
+            margin-top: 20px;
+            padding-bottom: 70px;
+            list-style: none;
+        }
+
+        .sidebar .nav-links li {
+            position: relative;
+            height: 50px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar .nav-links li a {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            transition: all var(--transition-speed) ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #fff;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-links li i {
+            min-width: 50px;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            transition: transform var(--transition-speed);
+        }
+
+        .sidebar .nav-links li a:hover i {
+            transform: translateX(5px);
+        }
+
+        .sidebar .nav-links li a .links_name {
+            white-space: nowrap;
+        }
+
+        .sidebar.active .nav-links li a .links_name {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar .nav-links li.highlight a {
+            background: rgba(255, 255, 255, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                background: rgba(255, 255, 255, 0.3);
+            }
+            100% {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Home Section Styling */
+        .home-section {
+            position: relative;
+            background: var(--light-color);
+            width: calc(100% - var(--sidebar-width));
+            left: var(--sidebar-width);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .sidebar.active ~ .home-section {
+            width: calc(100% - var(--sidebar-collapsed-width));
+            left: var(--sidebar-collapsed-width);
+        }
+
+        /* Navigation Bar Styling */
+        .home-section nav {
+            display: flex;
+            justify-content: space-between;
+            height: 80px;
+            background: #fff;
+            padding: 0 20px;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            transition: background var(--transition-speed);
+        }
+
+        [data-theme="dark"] .home-section nav {
+            background: var(--dark-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .sidebar-button {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .sidebar-button i {
+            font-size: 28px;
+            margin-right: 10px;
+            color: var(--primary-color);
+            transition: transform var(--transition-speed);
+        }
+
+        .sidebar-button i:hover {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-button .dashboard {
+            color: var(--text-color);
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            position: relative;
+            height: 45px;
+            width: 350px;
+            margin: 0 20px;
+        }
+
+        .search-box input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            background: var(--light-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 16px;
+            padding: 0 20px 0 45px;
+            color: var(--text-color);
+            transition: all var(--transition-speed);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(67, 97, 238, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: all var(--transition-speed);
+        }
+
+        .search-box input:focus + i {
+            color: var(--primary-color);
+        }
+
+        .profile-details {
+            display: flex;
+            align-items: center;
+            background: var(--light-color);
+            border-radius: 20px;
+            padding: 5px 15px;
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-speed);
+        }
+
+        .profile-details:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .profile-details img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .profile-details .admin_name {
+            font-size: 15px;
+            font-weight: 500;
+            margin: 0 10px;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        .profile-details i {
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: transform var(--transition-speed);
+        }
+
+        .profile-details:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Profile Card Styling */
+        .profile-card {
+            display: none;
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 280px;
+            transition: all var(--transition-speed);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        [data-theme="dark"] .profile-card {
+            background: var(--dark-color);
+        }
+
+        .profile-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: block;
+            border: 2px solid var(--primary-color);
+        }
+
+        .profile-card h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        .profile-card p {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .profile-card span {
+            color: var(--text-muted);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            min-width: 180px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-speed);
+            z-index: 100;
+        }
+
+        [data-theme="dark"] .dropdown-menu {
+            background: var(--dark-color);
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-color);
+            font-size: 14px;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+
+        .dropdown-menu a i {
+            margin-right: 10px;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        /* Content Styling */
+        .content {
+            padding: 20px;
+            width: calc(100% - var(--sidebar-width));
+            left: var(--sidebar-width);
+            background-color: var(--light-color);
+            transition: all var(--transition-speed);
+        }
+
+        /* Overview Box Styling */
+        .overview-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .overview-boxes .box {
+            flex: 1;
+            min-width: 250px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all var(--transition-speed);
+            transform: translateY(0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .overview-boxes .box {
+            background: var(--dark-color);
+        }
+
+        .overview-boxes .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-topic {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .number {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 15px 0;
+            color: var(--text-color);
+        }
+
+        .indicator {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .indicator i {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .indicator.up i {
+            color: var(--success-color);
+        }
+
+        .indicator.down i {
+            color: var(--danger-color);
+        }
+
+        .indicator.up span {
+            color: var(--success-color);
+        }
+
+        .indicator.down span {
+            color: var(--danger-color);
+        }
+
+        /* Box Animations */
+        .overview-boxes .box:nth-child(1) {
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        .overview-boxes .box:nth-child(2) {
+            animation: fadeInUp 0.5s ease-in-out 0.2s both;
+        }
+
+        .overview-boxes .box:nth-child(3) {
+            animation: fadeInUp 0.5s ease-in-out 0.4s both;
+        }
+
+        .overview-boxes .box:nth-child(4) {
+            animation: fadeInUp 0.5s ease-in-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Box Styling Additions */
+        .overview-boxes .box:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .overview-boxes .box:nth-child(2):before {
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+        }
+
+        .overview-boxes .box:nth-child(3):before {
+            background: linear-gradient(90deg, var(--primary-color), var(--warning-color));
+        }
+
+        .overview-boxes .box:nth-child(4):before {
+            background: linear-gradient(90deg, var(--primary-color), var(--danger-color));
+        }
+
+        /* Table Styling */
+        .table-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            margin-left: 260px;
+            width: 1400px;
+            box-shadow: var(--box-shadow);
+            margin-top: 20px;
+            overflow-x: auto;
+            animation: fadeIn 0.5s ease-in-out;
+            margin-bottom: 30px;
+        }
+
+        [data-theme="dark"] .table-container {
+            background: var(--dark-color);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+            font-size: 14px;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table tbody tr {
+            transition: all var(--transition-speed);
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .table .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .table .status.active {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+
+        .table .status.inactive {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+
+        .table .status.pending {
+            background: rgba(255, 152, 0, 0.1);
+            color: var(--warning-color);
+        }
+
+        .table .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .table .action-buttons button {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .table .action-buttons button.edit {
+            color: var(--primary-color);
+        }
+
+        .table .action-buttons button.delete {
+            color: var(--danger-color);
+        }
+
+        .table .action-buttons button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Form Styling */
+        .form-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        [data-theme="dark"] .form-container {
+            background: var(--dark-color);
+        }
+
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-color);
+            background: var(--light-color);
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(67, 97, 238, 0.3);
+            outline: none;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed);
+            z-index: 99;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .theme-toggle i {
+            color: #fff;
+            font-size: 20px;
+            transition: all var(--transition-speed);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .sidebar {
+                width: 78px;
+            }
+
+            .sidebar.active {
+                width: 240px;
+            }
+
+            .home-section {
+                width: calc(100% - 85px);
+                left: 85px;
+            }
+
+            .sidebar.active ~ .home-section {
+                width: calc(100% - 340px);
+                left: 340px;
+            }
+
+            .overview-boxes .box {
+                min-width: calc(50% - 15px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .overview-boxes .box {
+                min-width: 100%;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .profile-details .admin_name {
+                display: none;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .form-group.half {
+                width: 100%;
+            }
+
+            .toast {
+                left: 20px;
+                right: 20px;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 0;
+                opacity: 0;
+            }
+
+            .sidebar.active {
+                width: 240px;
+                opacity: 1;
+            }
+
+            .home-section {
+                width: 100%;
+                left: 0;
+            }
+
+            .sidebar.active ~ .home-section {
+                left: 240px;
+                width: calc(100% - 240px);
+                opacity: 0.7;
+            }
+        }
+
+        /* Additional Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* User Management Component Styling */
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .table-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-wrapper input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            outline: none;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .btn-primary, .btn-secondary, .btn-refresh {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f7;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e1e1e9;
+        }
+
+        .btn-refresh {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-refresh:hover {
+            background: #f0f0f7;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .table thead th {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+        }
+
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #f0f0f7;
+        }
+
+        .user-profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .badge-primary {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+
+        .badge-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+
+        .badge-info {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent-color);
+        }
+
+        .badge-secondary {
+            background: rgba(108, 117, 125, 0.1);
+            color: var(--text-muted);
+        }
+
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .count-badge {
+            font-size: 1.1rem;
+        }
+
+        /* User Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 40px auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        [data-theme="dark"] .modal-content {
+            background: var(--dark-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .modal-close:hover {
+            color: var(--danger-color);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* Form Row Styling */
+        #userForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0;
+        }
+
+        .form-group.half {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 10px;
+            padding-right: 30px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .hint {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Image Upload Styling */
+        .image-upload-container {
+            position: relative;
+        }
+
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            margin: 0 auto 10px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all var(--transition-speed);
+            color: white;
+        }
+
+        .upload-overlay i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .upload-overlay span {
+            font-size: 12px;
+        }
+
+        .image-preview:hover .upload-overlay {
+            opacity: 1;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Button Styles */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f7;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e1e1e9;
+        }
+
+        /* Toast Notification Styling */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 16px;
+            min-width: 300px;
+            max-width: 400px;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        [data-theme="dark"] .toast {
+            background-color: var(--dark-color);
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .toast-content i {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .toast-content i.bx-check-circle {
+            color: var(--success-color);
+        }
+
+        .toast-content i.bx-error-circle {
+            color: var(--danger-color);
+        }
+
+        .toast-message {
+            flex: 1;
+        }
+
+        .toast-title {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-color);
+        }
+
+        .toast-description {
+            display: block;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .toast-progress::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: progress 5s linear forwards;
+        }
+
+        @keyframes progress {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Responsive Adjustments for the modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .form-group.half {
+                width: 100%;
+            }
+
+            .toast {
+                left: 20px;
+                right: 20px;
+                min-width: auto;
+            }
+        }
+        .homeBar{
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
-<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Sidebar -->
+<!-- SIDE BAR -->
 <div class="sidebar">
-    <div class="logo">Dashboard</div>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" id="dashboard" href="#" data-content="dashboard"><i class="fas fa-home me-2"></i>Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="updateUser" href="#" data-content="updateUser"><i class="fas fa-user-edit me-2"></i>Update User</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" id="members" data-content="members"><i class="fas fa-users me-2"></i>Members</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" id="meetings" data-content="meetings"><i class="fas fa-calendar-alt me-2"></i>Meetings</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" id="Event" data-content="events"><i class="fas fa-calendar-check me-2"></i>Events</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" id="eventFacility" data-content="eventFacility"><i class="fas fa-building me-2"></i>Event Facility</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" id="event_types" data-content="eventType"><i class="fas fa-tags me-2"></i>Event Type</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-content="meetingAttendance"><i class="fas fa-clipboard-list me-2"></i>Meeting Attendance</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="memberDashboard.html" ><i class="fas fa-home me-2"></i>Member Dashboard</a>
-        </li>
+    <div class="logo-details">
+        <i class='bx bx-code-alt'></i>
+        <span class="logo_name">MeetHive</span>
+    </div>
+    <ul class="nav-links">
+        <li><a id="dashboardPage" href="#" class="active"><i id="dashboardIcon" class='bx bx-grid-alt'></i><span id="dashboardName" class="links_name">Dashboard</span></a></li>
+        <li><a id="customerPage" href="#"><i id="customerIcon" class='bx bx-user'></i><span id="userName" class="links_name">Users</span></a></li>
+        <li><a id="supplierPage" href="#"><i id="supplierIcon" class='bx bx-group'></i><span id="supplierName" class="links_name">Members</span></a></li>
+        <li><a id="productsPage" href="#"><i id="productsIcon" class='bx bx-calendar-event'></i><span id="categoryName" class="links_name">Event Manage</span></a></li>
+        <li><a id="orderPage" href="#"><i id="orderIcon" class='bx bx-calendar-event'></i><span id="orderName" class="links_name">Meeting Creation</span></a></li>
+        <li><a id="stockPage" href="#"><i id="stockIcon" class='bx bx-building'></i><span id="stockName" class="links_name">Event Facility</span></a></li>
+        <li><a id="employeePage" href="#"><i id="employeeIcon" class='bx bx-package'></i><span id="employeeName" class="links_name">Event Types</span></a></li>
+        <li><a id="attendPage" href="#"><i id="attendsIcon" class='bx bx-book-alt'></i><span id="attendName" class="links_name">Meeting Attend</span></a></li>
+        <li><a id="eventPage" href="#"><i id="eventIcon" class='bx bx-book-alt'></i><span id="eventName" class="links_name">Event Participation</span></a></li>
+        <li class="log_out"><a href="index.html"><i class='bx bx-log-out'></i><span class="links_name">Log out</span></a></li>
     </ul>
 </div>
 
-<!-- Main Content -->
-    <section id="MainContent">
-        <div class="main-content">
-            <!-- Navbar -->
-            <nav class="navbar">
-                <div class="container-fluid">
-                    <span class="navbar-brand">Welcome, Admin</span>
-                    <div class="d-flex align-items-center">
-                        <form class="d-flex me-3">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-primary" type="submit">Search</button>
-                        </form>
-                        <!-- Profile Dropdown -->
-                        <div class="dropdown">
-                            <a class="dropdown-toggle d-flex align-items-center text-decoration-none" href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="resources/images/Profile_Icon.png" alt="Profile" class="profile-img me-2">
-                                <span>John Doe</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Dynamic Content Area -->
-            <div id="dynamicContent" class="mt-4">
-                <!-- Default Dashboard Content -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card text-center p-4">
-                            <i class="fas fa-users card-icon"></i>
-                            <h5 class="mt-3">Users</h5>
-                            <p class="text-muted">Total: 1,234</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center p-4">
-                            <i class="fas fa-chart-line card-icon"></i>
-                            <h5 class="mt-3">Revenue</h5>
-                            <p class="text-muted">$12,345</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center p-4">
-                            <i class="fas fa-shopping-cart card-icon"></i>
-                            <h5 class="mt-3">Orders</h5>
-                            <p class="text-muted">Total: 567</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center p-4">
-                            <i class="fas fa-tasks card-icon"></i>
-                            <h5 class="mt-3">Tasks</h5>
-                            <p class="text-muted">Completed: 89%</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</section>
-<!--User List-->
-<section id="UserList">
-    <div class="card shadow-sm">
-<div class="containers" >
-    <!-- Card Component -->
-    <div class="tableUser shadow-sm mb-4">
-        <!-- Card Header -->
-        <div class="card-header bg-white border-bottom-0 pb-0">
-            <h3 class="card-title mb-0">User List</h3>
-            <p id="para">Before active the member pleas Check the member Table</p>
-        </div>
-
-        <!-- Card Body - Table -->
-        <div class="card-body pt-0">
-            <div class="table-responsive">
-                <table class="table table-bordered mb-0">
-                    <thead class="table-light">
-                    <tr>
-                        <th>User ID</th>
-                        <th>Full Name</th>
-                        <th>Birthday</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Active Status</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody id="userTableBody">
-                    <!-- User rows will be dynamically added here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Card Footer - Pagination -->
-        <div class="card-footer bg-white border-top-0">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <span class="text-muted small">Showing <span id="currentEntries">0</span> of <span id="totalEntries">0</span> entries</span>
-                </div>
-                <div>
-                    <div class="d-flex align-items-center">
-                        <select id="pageSize" class="form-select form-select-sm me-2" style="width: auto;">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                        <div class="btn-group">
-                            <button class="btn btn-outline-secondary btn-sm" id="prevPage">Previous</button>
-                            <div id="pageNumbers" class="btn-group"></div>
-                            <button class="btn btn-outline-secondary btn-sm" id="nextPage">Next</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- HOME SECTION -->
+<section class="home-section">
+    <div class="homeBar">
+    <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
     </div>
-</div>
+    <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Search...">
+        <i class='bx bx-search'></i>
     </div>
 
-    <!-- Update User Form (Initially Hidden) -->
-    <div class="form-container" id="updateUserFormContainer" style="display: none;">
-        <h3>Update User</h3>
-        <form id="updateUserForm">
-            <!-- Hidden input for userId -->
-            <input type="hidden" id="userId" name="userId" value="">
+    <div class="profile-details">
+        <img id="profilePic" src="images/default.jpg" alt="profile">
+        <span class="admin_name" id="admin1Name">Loading...</span>
+        <i class='bx bx-chevron-down'></i>
+        <div class="dropdown-menu">
+            <a href="#" onclick="toggleProfileCard()"><i class='bx bx-user'></i> My Profile</a>
+            <a href="/userSetting.html"><i class='bx bx-cog'></i> Settings</a>
+            <a href="index.html"><i class='bx bx-log-out'></i> Logout</a>
+        </div>
+    </div>
+    </div>
+    <!-- Hidden Profile Card -->
+    <div id="profileCard" class="profile-card" style="display:none; position:absolute; top:80px; right:20px; background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); z-index:1000;">
+        <img id="cardProfilePic" src="images/default.jpg" alt="Profile" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 10px;">
+        <h3 id="cardName">Full Name</h3>
+        <p>Email: <span id="cardEmail"></span></p>
+        <p>Phone: <span id="cardPhone"></span></p>
+        <p>Address: <span id="cardAddress"></span></p>
+        <p>Birthday: <span id="cardBirthday"></span></p>
+        <p>Role: <span id="cardRole"></span></p>
+    </div>
 
-            <!-- Full Name -->
-            <div class="mb-3">
-                <label for="fullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="fullName" name="fullName" disabled>
+
+
+    <div class="content">
+
+        <!--=============================HOME CONTENT=============-->
+        <div class="home-content" id="home">
+            <div class="overview-boxes">
+                <div class="box">
+                    <div class="box-topic">Total Orders</div>
+                    <div class="number">128</div>
+                    <div class="indicator up">
+                        <i class='bx bx-up-arrow-alt'></i>
+                        <span>Up 15% from last month</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-topic">Total Sales</div>
+                    <div class="number">$12,548</div>
+                    <div class="indicator up">
+                        <i class='bx bx-up-arrow-alt'></i>
+                        <span>Up 22% from last month</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-topic">Total Users</div>
+                    <div class="number">543</div>
+                    <div class="indicator up">
+                        <i class='bx bx-up-arrow-alt'></i>
+                        <span>Up 8% from last month</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-topic">Total Products</div>
+                    <div class="number">87</div>
+                    <div class="indicator down">
+                        <i class='bx bx-down-arrow-alt'></i>
+                        <span>Down 2% from last month</span>
+                    </div>
+                </div>
             </div>
-
-            <!-- Birthday -->
-            <div class="mb-3">
-                <label for="birthday" class="form-label">Birthday</label>
-                <input type="date" class="form-control" id="birthday" name="birthday" disabled>
-            </div>
-
-            <!-- Address -->
-            <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" disabled>
-            </div>
-
-            <!-- Phone Number -->
-            <div class="mb-3">
-                <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" disabled>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" disabled>
-            </div>
-
-            <!-- Password
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>-->
-
-            <!-- Role -->
-            <div class="mb-3">
-                <label for="role" class="form-label">Role</label>
-                <select class="form-select" id="role" name="role" required>
-                    <option value="ADMIN">Admin</option>
-                    <option value="MEMBER">Member</option>
-                </select>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary" onclick="loadForm()">Update</button>
-            <!-- Cancel Button -->
-            <button type="button" class="btn btn-secondary" onclick="hideForm()">Cancel</button>
-        </form>
+        </div>
     </div>
 </section>
-<!--Event Creation-->
-<div class="form-container tableUser" id="eventCreation">
-    <h1 class="text-center mb-4">Create Event</h1>
-    <form id="eventForm" class="card p-4">
-
-        <!-- Event Details -->
-        <div class="card mb-3">
-            <div class="card-header text-white">
-                <h5 class="formNames">Event Details</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label" for="eventTitle">Event Title</label>
-                        <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
+        <!--=============================Category CONTENT=============-->
+        <div class="category-content" id="customer">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>User Management</h2>
+                        <div class="table-actions">
+                            <div class="search-wrapper">
+                                <input type="text" id="userSearchInput" placeholder="Search users...">
+                                <i class="bx bx-search"></i>
+                            </div>
+                            <button id="refreshUsersBtn" class="btn-refresh">
+                                <i class="bx bx-refresh"></i> Refresh
+                            </button>
+                            <button id="addUserBtn" class="btn-primary">
+                                <i class="bx bx-plus"></i> Add User
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="description">Description</label>
-                        <textarea class="form-control" id="description" rows="2"></textarea>
+
+                    <div class="table-responsive">
+                        <table id="usersTable" class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Profile</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                            <!-- Table data will be populated by JavaScript -->
+                            <tr class="loading-row">
+                                <td colspan="8">
+                                    <div class="loading-spinner"></div>
+                                    <p>Loading users...</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            Showing <span id="startRecord">0</span> to <span id="endRecord">0</span> of <span id="totalRecords">0</span> entries
+                        </div>
+                        <div class="pagination-controls">
+                            <button id="prevPageBtn" class="btn-pagination" disabled>
+                                <i class="bx bx-chevron-left"></i> Previous
+                            </button>
+                            <div id="paginationNumbers" class="pagination-numbers">
+                                <!-- Page numbers will be inserted here -->
+                            </div>
+                            <button id="nextPageBtn" class="btn-pagination" disabled>
+                                Next <i class="bx bx-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label class="form-label" for="startDateTime">Start DateTime</label>
-                        <input type="datetime-local" class="form-control" id="startDateTime" required>
+
+                <!-- User Modal for Add/Edit -->
+                <div id="userModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modalTitle">Add New User</h3>
+                            <span class="modal-close">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="userForm" enctype="multipart/form-data">
+                                <input type="hidden" id="userId" name="userId">
+
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" name="fullName" class="form-control" disabled>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" disabled>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group half">
+                                        <label for="birthday">Birthday</label>
+                                        <input type="date" id="birthday" name="birthday" class="form-control" disabled>
+                                    </div>
+
+                                    <div class="form-group half">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <textarea id="address" name="address" class="form-control" rows="2" disabled></textarea>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group half">
+                                        <label for="role">Role</label>
+                                        <select id="role" name="role" class="form-control" required>
+                                            <option value="">Select Role</option>
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="MEMBER">Member</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group half" id="passwordGroup">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" name="password" class="form-control" disabled>
+                                        <small class="hint">Leave empty to keep current password</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="image">Profile Image</label>
+                                    <div class="image-upload-container">
+                                        <div class="image-preview" id="imagePreview">
+                                            <img src="/api/placeholder/150/150" alt="Profile Preview" id="previewImage">
+                                            <div class="upload-overlay">
+                                                <i class="bx bx-upload"></i>
+                                                <span>Upload Image</span>
+                                            </div>
+                                        </div>
+                                        <input type="file" id="image" name="image" accept="image/*" class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                                    <button type="submit" id="saveUserBtn" class="btn-primary">Save User</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="endDateTime">End DateTime</label>
-                        <input type="datetime-local" class="form-control" id="endDateTime" required>
+                </div>
+
+                <!-- Success/Error Toast Notification -->
+                <div id="toast" class="toast">
+                    <div class="toast-content">
+                        <i id="toastIcon" class="bx bx-check-circle"></i>
+                        <div class="toast-message">
+                            <span id="toastTitle" class="toast-title">Success</span>
+                            <span id="toastDescription" class="toast-description">Operation completed successfully</span>
+                        </div>
+                    </div>
+                    <div class="toast-progress"></div>
+                </div>
+
+
+        </div>
+
+        <!--=============================Subcategory CONTENT=============-->
+        <div class="subCategory-content" id="supplier">
+            <div class="container mt-4 table-container">
+                <h2 class="mb-4">Member Management</h2>
+
+                <!-- Count Display Card -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Total Members</h5>
+                        <span class="badge bg-primary count-badge" id="memberCount">0</span>
+                    </div>
+                </div>
+
+                <!-- Member Table -->
+                <div class="card shadow">
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Join Date</th>
+                                <th scope="col">NIC</th>
+                                <th scope="col">Positions Held</th>
+                            </tr>
+                            </thead>
+                            <tbody id="memberTableBody">
+                            <!-- Data will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Admin and Event Type Details -->
-        <div class="card mb-3">
-            <div class="card-header text-white">
-                <h5 class="mb-0 formNames">Admin & Event Type</h5>
+
+
+        <!--=============================Subcategory2 CONTENT=============-->
+        <div class="subCategory-content" id="products">
+            <div class="form-container table-container" id="eventCreation">
+                <h1 class="text-center mb-4">Create Event</h1>
+                <form id="eventForm" class="card p-4">
+
+                    <!-- Event Details -->
+                    <div class="card mb-3">
+                        <div class="card-header text-white">
+                            <h5 class="formNames">Event Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="eventTitle">Event Title</label>
+                                    <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="description">Description</label>
+                                    <textarea class="form-control" id="description" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="startDateTime">Start DateTime</label>
+                                    <input type="datetime-local" class="form-control" id="startDateTime" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="endDateTime">End DateTime</label>
+                                    <input type="datetime-local" class="form-control" id="endDateTime" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin and Event Type Details -->
+                    <div class="card mb-3">
+                        <div class="card-header text-white">
+                            <h5 class="mb-0 formNames">Admin & Event Type</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="adminID">Admin ID</label>
+                                    <input type="text" class="form-control" id="adminID" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="adminName">Admin Email</label>
+                                    <select class="form-control" id="adminName" required>
+                                        <option value="" disabled selected>Select Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="eventTypeID">Event Type ID</label>
+                                    <input type="text" class="form-control" id="eventTypeID" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="eventType">Event Type</label>
+                                    <select class="form-control" id="eventType" required>
+                                        <option value="" disabled selected>Select Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Facility Selection -->
+                    <div class="card mb-3">
+                        <div class="card-header text-white">
+                            <h5 class="mb-0 formNames">Add Facilities</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Facility ID</label>
+                                    <input type="number" class="form-control" id="facilityID" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Facility Name</label>
+                                    <select class="form-control" id="facilitySelect" required>
+                                        <option value="" disabled selected>Select Facility</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Facility Qty</label>
+                                    <input type="number" class="form-control" id="facilityQtys" readonly>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" class="form-control" id="facilityDes" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Qty</label>
+                                    <input type="number" class="form-control" id="facilityQty" min="1" value="1">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+
+                                <div class="col-md-4 text-right">
+                                    <button type="button" id="addFacilityBtn" class=" btn-primary w-100">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Facilities -->
+                    <div class="card mb-3">
+                        <div class="card-header text-white">
+                            <h5 class="mb-0 formNames">Selected Facilities</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Facility ID</th>
+                                    <th>Facility</th>
+                                    <th>Qty</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="facilitiesCart"></tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-right font-weight-bold">Total QTY:</td>
+                                    <td id="facilitiesTotalQTY">0</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="text-right">
+                        <button type="button" id="clearBtn" class="btn btn-reset">Clear All</button>
+                        <button type="button" id="saveEventBtn" class="btn-primary">Create Event</button>
+                    </div>
+                </form>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label" for="adminID">Admin ID</label>
-                        <input type="text" class="form-control" id="adminID" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="adminName">Admin Name</label>
-                        <select class="form-control" id="adminName" required>
-                            <option value="" disabled selected>Select Admin</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label class="form-label" for="eventTypeID">Event Type ID</label>
-                        <input type="text" class="form-control" id="eventTypeID" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="eventType">Event Type</label>
-                        <select class="form-control" id="eventType" required>
-                            <option value="" disabled selected>Select Type</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+
+            <!-- JavaScript Template for Facility Row -->
+            <script type="text/template" id="facilityRowTemplate">
+                <tr data-id="{{id}}">
+                    <td>{{id}}</td>        <!-- Facility ID leftmost -->
+                    <td>{{name}}</td>      <!-- Facility Name -->
+                    <td>{{qty}}</td>      <!-- Quantity -->
+                    <td>{{desc}}</td>     <!-- Description rightmost -->
+                    <td><button class="btn btn-sm btn-danger remove-facility">×</button></td>
+                </tr>
+            </script>
         </div>
 
+        <div class="subCategory-content" id="order">
+            <!--Meetings-->
+            <div class="container mt-4 table-container" id="meetingsCreate">
+                <div class="form-container cards">
+                    <h1 class="card-header card-title">Create New Meeting</h1>
+                    <form id="meetingForm">
+                        <!--user name id-->
+                        <div class="form-group">
+                            <label for="userEmail">User Email</label>
+                            <select class="form-control" id="userEmail" name="userEmail" required>
+                                <option value="">Select User Email</option>
+                                <!--Options will be populated via JavaScript-->
+                            </select>
+                        </div>
 
-        <!-- Facility Selection -->
-        <div class="card mb-3">
-            <div class="card-header text-white">
-                <h5 class="mb-0 formNames">Add Facilities</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label class="form-label">Facility ID</label>
-                        <input type="number" class="form-control" id="facilityID" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Facility Name</label>
-                        <select class="form-control" id="facilitySelect" required>
-                            <option value="" disabled selected>Select Facility</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Qty</label>
-                        <input type="number" class="form-control" id="facilityQty" min="1" value="1">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-8">
-                        <label class="form-label">Description</label>
-                        <input type="text" class="form-control" id="facilityDes" readonly>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <button type="button" id="addFacilityBtn" class="btn btn-primary w-100">Add</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label for="userIds">User ID</label>
+                            <input type="text" class="form-control" id="userIds" name="userId" readonly>
+                        </div>
+                        <!--Meeting Title-->
+                        <div class="form-group">
+                            <label for="meetingTitle">Meeting Title</label>
+                            <input type="text" class="form-control" id="meetingTitle" name="meetingTitle" required>
+                        </div>
 
-        <!-- Selected Facilities -->
-        <div class="card mb-3">
-            <div class="card-header text-white">
-                <h5 class="mb-0 formNames">Selected Facilities</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
+                        <!--Date and Time in two columns-->
+                        <div class="two-column">
+                            <div class="form-group">
+                                <label for="meetingDate">Meeting Date</label>
+                                <input type="date" class="form-control" id="meetingDate" name="meetingDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="meetingTime">Meeting Time</label>
+                                <input type="time" class="form-control" id="meetingTime" name="meetingTime" required>
+                            </div>
+                        </div>
+
+                         <!--Description -->
+                        <div class="form-group">
+                            <label for="descriptions">Description</label>
+                            <textarea class="form-control" id="descriptions" name="description" rows="4"></textarea>
+                        </div>
+
+                         <!--Submit Button-->
+                        <button type="button" id="addMeeting" class=" btn-primary">Schedule Meeting</button><br>
+                        <button type="button" id="updateMeeting" class="btn btn-warning">Update Meeting</button>
+                        <button type="button" id="refreshTable" class="btn btn-success">Refresh Table</button>
+                    </form>
+                </div>
+                <br>
+                <br>
+                <table class="table table-bordered table-hover cards">
                     <thead class="thead-dark">
                     <tr>
-                        <th>Facility ID</th>
-                        <th>Facility</th>
-                        <th>Qty</th>
+                        <th>Meeting ID</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>Description</th>
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody id="facilitiesCart"></tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="2" class="text-right font-weight-bold">Total QTY:</td>
-                        <td id="facilitiesTotalQTY">0</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="text-right">
-            <button type="button" id="clearBtn" class="btn btn-secondary btn-reset">Clear All</button>
-            <button type="submit" class="btn btn-submit">Create Event</button>
-        </div>
-    </form>
-</div>
-
-<!-- JavaScript Template for Facility Row -->
-<script type="text/template" id="facilityRowTemplate">
-    <tr data-id="{{id}}">
-        <td>{{id}}</td>        <!-- Facility ID leftmost -->
-        <td>{{name}}</td>      <!-- Facility Name -->
-        <td>{{qty}}</td>      <!-- Quantity -->
-        <td>{{desc}}</td>     <!-- Description rightmost -->
-        <td><button class="btn btn-sm btn-danger remove-facility">×</button></td>
-    </tr>
-</script>
-<!--Member List-->
-<div class="containers tableUser" id="memberList">
-    <div class="card shadow-sm">
-        <div class="card-header bg-white">
-            <h3 class="card-title mb-0">Members List</h3>
-        </div>
-
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                    <tr>
-                        <th>Member ID</th>
-                        <th>Full Name</th>
-                        <th>Join Date</th>
-                        <th>NIC</th>
-                        <th>Positions Held</th>
-                    </thead>
-                    <tbody id="memberListTableBody">
-
+                    <tbody id="meetingTableBody">
+                     <!--More rows dynamically added here -->
                     </tbody>
                 </table>
+
+            </div>
+
+        </div>
+
+        <div class="subCategory-content" id="stock">
+            <!--Event Facility-->
+            <div class="cardss table-container"  id="eventFac">
+                <div class="card ">
+                    <h3 class="card-title card-header" style="text-align: center; color: var(--primary-black);">Event Facility Form</h3>
+                    <div class="form-container">
+                        <form action="#" id="eventFaci" method="POST">
+                            <div class="form-group">
+                                <label for="facilityName" class="form-label">Facility Name</label>
+                                <input type="text" class="form-control" id="facilityName" name="facilityName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="FacilityDescriptions" class="form-label">Description</label>
+                                <textarea class="form-control" id="FacilityDescriptions" name="description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="qty" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="qty" name="qty" required min="1">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="button" id="SaveFacility" class="btn btn-submit">Submit</button>
+                                <button type="button" id="UpdateFacility" class="btn btn-warning" style="display: none;">Update</button>
+                                <button type="reset" class="btn btn-reset">Reset</button>
+                            </div>
+
+                        </form>
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Facility ID</th>
+                                <th>Facility Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="facilityTableBody">
+                            <!--Data will be dynamically loaded here from getAll API endpoint-->
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="subCategory-content" id="eventTypess">
+            <!--Event type-->
+            <div id="Event_type" class="container table-container mt-4">
+                <!-- Event Type Form -->
+                <div class="card" id="eventTypeForm">
+                    <div class="card-header text-black text-center">
+                        <h4>Event Type Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="eventTypes" method="POST">
+                            <div class="mb-3">
+                                <label for="eventType" class="form-label">Event Type</label>
+                                <input type="text" class="form-control" id="eventTypeN" name="eventType" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="descriptionType" name="description" rows="3" required></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="reset" class="btn-secondary">Reset</button>
+                                <button type="button" class="btn btn-success" id="typeUpdate">Update</button>
+                                <button type="button" class="btn-primary" id="addEventType">Add Event Type</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Event Type Table -->
+                <div class="card mt-4">
+                    <div class="card-header text-white text-center">
+                        <h4>Event Types</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Event Type ID</th>
+                                <th>Event Type</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="eventTypeTableBody">
+                            <!-- Dynamic Data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="subCategory-content" id="meetingAttend">
+            <!--Meeting Attendance-->
+            <div class="container mt-5 table-container" >
+                <h2 class="mb-4" id="formTitle">Meeting Attendance Management</h2>
+
+                <!--Meeting Form-->
+                <div class="cards mb-4">
+                    <div class="card card-body">
+                        <form id="AttendForm" class="form-container">
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="meetingsTitle" class="form-label">Meeting Title</label>
+                                    <select class="form-select" id="meetingsTitle" required>
+                                        <option value="">Select Meetings Title</option>
+                                        <!--Will be populated via JavaScript-->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="meetingID" class="form-label">Meeting ID</label>
+                                    <input type="text" class="form-control" id="meetingID" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="memberSelect" class="form-label">Member</label>
+                                    <select class="form-select" id="memberSelect" required>
+                                        <option value="">Select Member</option>
+                                        <!--Will be populated via JavaScript-->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="memberID" class="form-label">Member ID</label>
+                                    <input type="text" class="form-control" id="memberID" disabled>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" id="saveAttendance" class="btn-primary">Save Attendance</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--Meetings Table-->
+                <div class="cards">
+                    <div class="card-header">
+                        <h4>Meetings List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Member ID</th>
+                                    <th>Date & Time</th>
+                                </tr>
+                                </thead>
+                                <tbody id="meetingAttendTableBody">
+                                <!--Will be populated via JavaScript-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card-footer bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-muted small">Showing 2 of 2 entries</div>
-                <div class="btn-group">
-                    <button class="btn btn-outline-secondary btn-sm">Previous</button>
-                    <button class="btn btn-outline-secondary btn-sm">Next</button>
+<!--Event Participation-->
+        <div class="subCategory-content" id="eventParticipation">
+            <div class="container mt-5 table-container" >
+                <h2 class="mb-4" id="formTitles">Event Participation Management</h2>
+
+                <!--Event Participation Form-->
+                <div class="cards mb-4">
+                    <div class="card card-body">
+                        <form id="participationForm" class="form-container">
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="eventTitles" class="form-label">Event Title</label>
+                                    <select class="form-select" id="eventTitles" required>
+                                        <option value="">Select Event Title</option>
+                                        <!--Will be populated via JavaScript-->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="User" class="form-label">Event ID</label>
+                                    <input type="text" class="form-control" id="User" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="memberSelects" class="form-label">Member</label>
+                                    <select class="form-select" id="memberSelects" required>
+                                        <option value="">Select Member</option>
+                                        <!--Will be populated via JavaScript-->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="memberIDs" class="form-label">Member ID</label>
+                                    <input type="text" class="form-control" id="memberIDs" disabled>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" id="saveParticipation" class="btn-primary">Save Participation</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--Meetings Table-->
+                <div class="cards">
+                    <div class="card-header">
+                        <h4>Event Participation List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Member ID</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody id="eventParticipationTableBody">
+                                <!--Will be populated via JavaScript-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!--Meetings-->
-<div class="tableUser" id="meetingsCreate">
-    <div class="form-container">
-        <h1>Create New Meeting</h1>
-        <form id="meetingForm">
-            <!-- Meeting Title -->
-            <div class="form-group">
-                <label for="meetingTitle">Meeting Title</label>
-                <input type="text" class="form-control" id="meetingTitle" name="meetingTitle" required>
-            </div>
 
-            <!-- Date and Time in two columns -->
-            <div class="two-column">
-                <div class="form-group">
-                    <label for="meetingDate">Meeting Date</label>
-                    <input type="date" class="form-control" id="meetingDate" name="meetingDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="meetingTime">Meeting Time</label>
-                    <input type="time" class="form-control" id="meetingTime" name="meetingTime" required>
-                </div>
-            </div>
-
-            <!-- Description -->
-            <div class="form-group">
-                <label for="descriptions">Description</label>
-                <textarea class="form-control" id="descriptions" name="description" rows="4"></textarea>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Schedule Meeting</button>
-        </form>
-    </div>
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>Meeting ID</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Description</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Project Discussion</td>
-            <td>2025-04-10</td>
-            <td>10:00 AM</td>
-            <td>Discussion on project updates</td>
-            <td>
-                <button class="btn btn-sm btn-primary">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
-            </td>
-        </tr>
-        <!-- More rows dynamically added here -->
-        </tbody>
-    </table>
-
-</div>
-
-<!--Event Facility-->
-<div class="container tableUser mt-4" id="eventFac">
-    <div class="card">
-        <h3 class="card-title" style="text-align: center; color: var(--primary-black);">Event Facility Form</h3>
-        <div class="card-body">
-            <form action="#" id="eventFaci" method="POST">
-                <div class="form-group">
-                    <label for="facilityName" class="form-label">Facility Name</label>
-                    <input type="text" class="form-control" id="facilityName" name="facilityName" required>
-                </div>
-                <div class="form-group">
-                    <label for="FacilityDescriptions" class="form-label">Description</label>
-                    <textarea class="form-control" id="FacilityDescriptions" name="description" rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="qty" class="form-label">Quantity</label>
-                    <input type="number" class="form-control" id="qty" name="qty" required min="1">
-                </div>
-
-                <div class="form-group">
-                    <button type="button" id="SaveFacility" class="btn btn-submit">Submit</button>
-                    <button type="button" id="UpdateFacility" class="btn btn-warning" style="display: none;">Update</button>
-                    <button type="reset" class="btn btn-reset">Reset</button>
-                </div>
-
-            </form>
-            <table class="table table-bordered table-hover">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Facility ID</th>
-                    <th>Facility Name</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody id="facilityTableBody">
-                <!-- Data will be dynamically loaded here from getAll API endpoint -->
-                </tbody>
-
-            </table>
-        </div>
-    </div>
-</div>
-<!--Event type-->
-<div id="Event_type" class="container tableUser mt-4">
-    <!-- Event Type Form -->
-    <div class="card" id="eventTypeForm">
-        <div class="card-header text-white text-center">
-            <h4>Event Type Form</h4>
-        </div>
-        <div class="card-body">
-            <form id="eventTypes" method="POST">
-                <div class="mb-3">
-                    <label for="eventType" class="form-label">Event Type</label>
-                    <input type="text" class="form-control" id="eventTypeN" name="eventType" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="descriptionType" name="description" rows="3" required></textarea>
-                </div>
-
-                <div class="d-flex justify-content-between">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="button" class="btn btn-warning" id="typeUpdate">Update</button>
-                    <button type="button" class="btn btn-primary" id="addEventType">Add Event Type</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Event Type Table -->
-    <div class="card mt-4">
-        <div class="card-header text-white text-center">
-            <h4>Event Types</h4>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped text-center">
-                <thead class="table-dark">
-                <tr>
-                    <th>Event Type ID</th>
-                    <th>Event Type</th>
-                    <th>Description</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody id="eventTypeTableBody">
-                <!-- Dynamic Data -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
-<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<script src="js/controller/userTable.js"></script>
+<script src="js/controller/member.js"></script>
+<script src="js/controller/meetingCreat.js"></script>
+<script src="js/controller/eventFacility.js"></script>
+<script src="js/controller/eventTypes.js"></script>
+<script src="js/controller/meetingAttendance.js"></script>
+<script src="js/controller/profile.js"></script>
+<script src="js/controller/eventParticipation.js"></script>
+<script src="js/controller/eventCreate.js"></script>
+
+<script>
+
+    // Enhanced MeetUpPro Dashboard Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all animations and functions
+        initializeAnimations();
+        initializeDashboard();
+        setupEventListeners();
+
+        // Check for saved theme preference
+        applySavedTheme();
+    });
+
+    // Initialize animations for dashboard elements
+    function initializeAnimations() {
+        // Animate sidebar menu items with staggered delay
+        document.querySelectorAll('.nav-links li').forEach((item, index) => {
+            item.style.animation = `slideIn 0.3s ease-in-out ${index * 0.1}s forwards`;
+            item.style.opacity = '0';
+        });
+
+        // Add hover effects to dashboard boxes
+        document.querySelectorAll('.box').forEach(box => {
+            box.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+            });
+
+            box.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'var(--box-shadow)';
+            });
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', createRippleEffect);
+        });
+    }
+
+    // Create ripple effect for buttons
+    function createRippleEffect(event) {
+        const button = event.currentTarget;
+
+        const circle = document.createElement('span');
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+        circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+        circle.classList.add('ripple');
+
+        const ripple = button.getElementsByClassName('ripple')[0];
+
+        if (ripple) {
+            ripple.remove();
+        }
+
+        button.appendChild(circle);
+    }
+
+    // Initialize dashboard functionality
+    function initializeDashboard() {
+        // Initialize any data visualization
+        initializeCharts();
+
+        // Notifications counter (example functionality)
+        let notificationCount = 5;
+        updateNotificationBadge(notificationCount);
+
+        // Simulate real-time data updates
+        setInterval(() => {
+            updateRandomStatistics();
+        }, 10000);
+    }
+    // Navigation and Sidebar Toggle
+    $(document).ready(function() {
+        // Hide all content sections except the dashboard initially
+        $('.category-content, .subCategory-content, .user-content').hide();
+        $('.home-content').show();
+
+        // Make the dashboard link active initially
+        $('#dashboardPage').addClass('active');
+
+        // Add theme toggle button to the body
+        $('body').append('<div class="theme-toggle"><i class="fas fa-moon"></i></div>');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        // Theme toggle functionality
+        $('.theme-toggle').click(function() {
+            toggleTheme();
+        });
+
+        // Navigation menu functionality
+        $('#dashboardPage').click(function(e) {
+            e.preventDefault();
+            showSection('home');
+            updateActiveLink(this);
+            updatePageTitle('Dashboard');
+        });
+
+        $('#customerPage').click(function(e) {
+            e.preventDefault();
+            showSection('customer');
+            updateActiveLink(this);
+            updatePageTitle('User Management');
+        });
+
+        $('#productsPage').click(function(e) {
+            e.preventDefault();
+            showSection('products');
+            updateActiveLink(this);
+            updatePageTitle('Event Management');
+        });
+
+        $('#orderPage').click(function(e) {
+            e.preventDefault();
+            showSection('order');
+            updateActiveLink(this);
+            updatePageTitle('Meeting Creation');
+        });
+
+        $('#stockPage').click(function(e) {
+            e.preventDefault();
+            showSection('stock');
+            updateActiveLink(this);
+            updatePageTitle('Event Facility Manage');
+        });
+
+        $('#supplierPage').click(function(e) {
+            e.preventDefault();
+            showSection('supplier');
+            updateActiveLink(this);
+            updatePageTitle('Members');
+        });
+
+        $('#employeePage').click(function(e) {
+            e.preventDefault();
+            showSection('eventTypess');
+            updateActiveLink(this);
+            updatePageTitle('Event Type Manage');
+        });
+
+        $('#attendPage').click(function(e) {
+            e.preventDefault();
+            showSection('meetingAttend');
+            updateActiveLink(this);
+            updatePageTitle('Meeting Attendance');
+        });
+
+        $('#eventPage').click(function(e) {
+            e.preventDefault();
+            showSection('eventParticipation');
+            updateActiveLink(this);
+            updatePageTitle('Event participation');
+        });
+
+        // Search functionality
+        $('#searchInput').on('keyup', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            searchContent(searchTerm);
+        });
+    });
+
+
+    // Profile dropdown functionality - improved version
+    $(document).ready(function() {
+        $('.profile-details').click(function(e) {
+            e.stopPropagation();
+            $('.dropdown-menu').toggleClass('show');
+        });
+
+        // Close dropdown when clicking elsewhere
+        $(document).click(function() {
+            $('.dropdown-menu').removeClass('show');
+        });
+    });
+
+    // Sidebar toggle functionality - improved version
+    $(document).ready(function() {
+        $('.sidebarBtn').click(function() {
+            $('.sidebar').toggleClass('active');
+
+            if($('.sidebar').hasClass('active')) {
+                $(this).removeClass('bx-menu').addClass('bx-menu-alt-right');
+                $('.home-section').css('width', 'calc(100% - 78px)');
+                $('.home-section').css('left', '78px');
+            } else {
+                $(this).removeClass('bx-menu-alt-right').addClass('bx-menu');
+                $('.home-section').css('width', 'calc(100% - 240px)');
+                $('.home-section').css('left', '240px');
+            }
+        });
+    });
+
+    // Function to toggle between light and dark theme
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Show a notification when theme changes
+        Swal.fire({
+            title: `${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} Mode Activated`,
+            text: `The application is now in ${newTheme} mode`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            position: 'top-end',
+            toast: true
+        });
+
+        updateThemeIcon(newTheme);
+    }
+
+    // Update theme toggle icon based on current theme
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            $('.theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
+        } else {
+            $('.theme-toggle i').removeClass('fa-sun').addClass('fa-moon');
+        }
+    }
+
+    // Show selected section and hide others
+    function showSection(sectionId) {
+        $('.home-content, .category-content, .subCategory-content').hide();
+        if (sectionId === 'home') {
+            $('.home-content').fadeIn();
+        } else if (sectionId === 'customer') {
+            $('#customer.category-content').fadeIn();
+        } else if (sectionId === 'Users') {
+            $('#customer.category-content').fadeIn();
+        } else if (sectionId === 'products') {
+            $('#products.subCategory-content').fadeIn();
+        } else if (sectionId === 'supplier') {
+            $('#supplier.subCategory-content').fadeIn();
+        } else if (sectionId === 'order') {
+            $('#order.subCategory-content').fadeIn();
+        } else if (sectionId === 'stock') {
+            $('#stock.subCategory-content').fadeIn();
+        } else if (sectionId === 'eventTypess') {
+            $('#eventTypess.subCategory-content').fadeIn();
+        } else if (sectionId === 'meetingAttend') {
+            $('#meetingAttend.subCategory-content').fadeIn();
+        } else if (sectionId === 'eventParticipation') {
+            $('#eventParticipation.subCategory-content').fadeIn();
+        } else {
+            // For sections not yet implemented, show home as fallback
+            $('.home-content').fadeIn();
+            Swal.fire({
+                title: 'Coming Soon',
+                text: 'This section is under development',
+                icon: 'info',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    // Update active link in sidebar
+    function updateActiveLink(element) {
+        $('.nav-links li a').removeClass('active');
+        $(element).addClass('active');
+    }
+
+    // Update page title in navbar
+    function updatePageTitle(title) {
+        $('.sidebar-button .dashboard').text(title);
+    }
+
+    // Search content across the dashboard
+    function searchContent(searchTerm) {
+        if (searchTerm.length > 2) {
+            // Search in tables
+            $('table tbody tr').each(function() {
+                const rowText = $(this).text().toLowerCase();
+                if (rowText.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Search in sidebar for navigation
+            $('.nav-links li').each(function() {
+                const linkText = $(this).text().toLowerCase();
+                if (linkText.includes(searchTerm)) {
+                    $(this).addClass('highlight');
+                } else {
+                    $(this).removeClass('highlight');
+                }
+            });
+        } else {
+            // Reset search if term is too short
+            $('table tbody tr').show();
+            $('.nav-links li').removeClass('highlight');
+        }
+    }
+
+    // Image preview functionality
+    function previewImage(event) {
+        const input = event.target;
+        const preview = input.id === 'image' ?
+            document.getElementById('imagePreview') :
+            document.getElementById('subCategoryImagePreview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/controller/adminDashboard.js"></script>
 </body>
 </html>
