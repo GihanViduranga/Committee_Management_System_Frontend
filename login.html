@@ -222,132 +222,76 @@
         })
             .then(response => response.json())
             .then(response => {
-                // if (response.code === 201 && response.data.token) {
-                //     const token = response.data.token;
-                //     localStorage.setItem("authToken", token);
-                //
-                //     // 🟡 Step 1: Fetch profile details
-                //     fetch("http://localhost:8080/api/User/profile", {
-                //         method: "GET",
-                //         headers: {
-                //             "Authorization": `Bearer ${token}`
-                //         }
-                //     })
-                //         .then(res => res.json())
-                //         .then(profile => {
-                //             // 🟢 Step 2: Store profile info if needed
-                //             localStorage.setItem("userProfile", JSON.stringify(profile));
-                //             console.log("Profile:", profile);
-                //
-                //             // 🟡 Step 3: Fetch role and redirect accordingly
-                //             fetch("http://localhost:8080/api/v1/admin/checkRole", {
-                //                 method: "GET",
-                //                 headers: {
-                //                     "Authorization": `Bearer ${token}`
-                //                 }
-                //             })
-                //                 .then(roleRes => roleRes.json())
-                //                 .then(roleData => {
-                //                     console.log("Role:", roleData.role);
-                //                     switch (roleData.role) {
-                //                         case "NEW_USER":
-                //                             window.location.href = "index.html";
-                //                             break;
-                //                         case "ADMIN":
-                //                             window.location.href = "test3.html";
-                //                             break;
-                //                         case "USER":
-                //                             window.location.href = "memberDashboard.html";
-                //                             break;
-                //                         default:
-                //                             Swal.fire({
-                //                                 icon: "error",
-                //                                 title: "Oops...",
-                //                                 text: "You are not allowed"
-                //                             });
-                //                     }
-                //
-                //                     Swal.fire("Login Success....!");
-                //                 })
-                //                 .catch(err => {
-                //                     console.error("Error checking role:", err);
-                //                     Swal.fire({
-                //                         icon: "error",
-                //                         title: "Oops...",
-                //                         text: "Failed to determine user role."
-                //                     });
-                //                 });
-                //
-                //         })
-                //         .catch(err => {
-                //             console.error("Error fetching profile:", err);
-                //             Swal.fire({
-                //                 icon: "error",
-                //                 title: "Oops...",
-                //                 text: "Failed to load user profile."
-                //             });
-                //         });
-                // }
+                if (response.code === 201 && response.data.token) {
+                    localStorage.setItem("authToken", response.data.token);
 
+                    fetch("http://localhost:8080/api/v1/admin/checkRole", {
+                        method: "GET",
+                        headers: { "Authorization": `Bearer ${response.data.token}` }
+                    })
+                        .then(response => response.json())
+                        .then(userData => {
+                            console.log("User Data:", userData.isActive);
 
-                            if (response.code === 201 && response.data.token) {
-                                localStorage.setItem("authToken", response.data.token);
-
-                                fetch("http://localhost:8080/api/v1/admin/checkRole", {
-                                    method: "GET",
-                                    headers: { "Authorization": `Bearer ${response.data.token}` }
-                                })
-                                    .then(response => response.json())
-                                    .then(roleData => {
-                                        console.log("Role:", roleData.role);
-                                        switch (roleData.role) {
-                                            case "NEW_USER":
-                                                window.location.href = "index.html";
-                                                Swal.fire("Login Success....!");
-                                                break;
-                                            case "ADMIN":
-                                                window.location.href = "Brandnew.html";
-                                                Swal.fire("Login Success....!");
-                                                break;
-                                            case "USER":
-                                                window.location.href = "memberDashboard.html";
-                                                Swal.fire("Login Success....!");
-                                                break;
-                                            default:
-                                                Swal.fire({
-                                                    icon: "error",
-                                                    title: "Oops...",
-                                                    text: "You are not allowed"
-                                                });
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Error fetching role:", error);
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Oops...",
-                                            text: "Failed to determine user role."
-                                        });
-                                    });
-                            } else {
+                            // First check if user is active
+                            if (!userData.isActive) {
                                 Swal.fire({
                                     icon: "error",
-                                    title: "Oops...",
-                                    text: "Login failed. Please try again."
+                                    title: "Account Inactive",
+                                    text: "Your account is not active. Please contact an administrator."
                                 });
+                                localStorage.removeItem("authToken"); // Clear invalid token
+                                return;
+                            }
+
+                            // Then check role for redirection
+                            switch (userData.role) {
+                                case "NEW_USER":
+                                    window.location.href = "index.html";
+                                    Swal.fire("Login Success!", "", "success");
+                                    break;
+                                case "ADMIN":
+                                    window.location.href = "adminDashboard.html";
+                                    Swal.fire("Login Success!", "", "success");
+                                    break;
+                                case "USER":
+                                    window.location.href = "memberDashboard.html";
+                                    Swal.fire("Login Success!", "", "success");
+                                    break;
+                                default:
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Access Denied",
+                                        text: "You don't have permission to access this system."
+                                    });
+                                    localStorage.removeItem("authToken");
                             }
                         })
                         .catch(error => {
-                            console.error("Login error:", error);
+                            console.error("Error checking role/status:", error);
                             Swal.fire({
                                 icon: "error",
-                                title: "Oops...",
-                                text: "Login failed. Please try again."
+                                title: "Error",
+                                text: "Failed to verify your account status."
                             });
                         });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Login Failed",
+                        text: response.message || "Invalid email or password."
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Login error:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred during login. Please try again."
                 });
-
-
+            });
+    });
                 // Forgot Password Functionality
                 const forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
 
