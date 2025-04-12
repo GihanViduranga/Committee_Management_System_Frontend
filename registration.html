@@ -228,6 +228,11 @@
                     <textarea class="form-control" id="address" rows="2" placeholder="Enter your address" required></textarea>
                 </div>
 
+                <div class="mb-compact slide-in-right" style="animation-delay: 0.7s">
+                    <label for="image-upload" class="form-label">Upload Image</label>
+                    <input type="file" class="form-control" id="image-upload" accept="image/*">
+                </div>
+
                 <div class="mb-compact slide-in-right" style="animation-delay: 0.6s">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
@@ -261,46 +266,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="js/controller/registration.js"></script>
 <!--<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Form validation
-        const form = document.getElementById('registrationForm');
+    document.getElementById("register").addEventListener('click', function(event) {
+        event.preventDefault();
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+        const fullName = document.getElementById("fullName").value;
+        const birthday = document.getElementById("dateOfBirth").value;
+        const email = document.getElementById("email").value;
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const address = document.getElementById("address").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("REpassword").value;
+        const role = "NEW_USER";
+        const imageFile = document.getElementById("image-upload").files[0];
 
-            // Basic validation
-            const password = document.getElementById('password').value;
+        if (!fullName || !birthday || !email || !password || !confirmPassword || !phoneNumber || !address) {
+            alert("All fields are required");
+            return;
+        }
 
-            if (password.length < 8) {
-                alert('Password must be at least 8 characters long');
-                return;
-            }
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
 
-            // Success animation
-            const button = document.querySelector('.btn-primary');
-            button.innerHTML = 'Registration Successful!';
-            button.classList.remove('pulse');
-            button.classList.add('animate_animated', 'animate_bounceIn');
+        // Create FormData object to handle file upload
+        const formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('birthday', birthday);
+        formData.append('email', email);
+        formData.append('phoneNumber', phoneNumber);
+        formData.append('address', address);
+        formData.append('password', password);
+        formData.append('role', role);
 
-            // In a real scenario, you would submit the form data to your server here
-            setTimeout(() => {
-                alert('Registration successful! Welcome to MeetHive!');
-            }, 1000);
-        });
+        if (imageFile) {
+            formData.append('image-upload', imageFile);
+        }
 
-        // Add focus animation
-        const inputs = document.querySelectorAll('.form-control');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.classList.add('animate_animated', 'animate_pulse');
-                this.style.animationDuration = '0.5s';
+        fetch("http://localhost:8080/api/v1/User/registerUser", {
+            method: 'POST',
+            body: formData
+            // Don't set Content-Type header when using FormData,
+            // the browser will set it automatically with the correct boundary
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response Data:", data);
+                if (data.code === 201 || data.success) {
+                    alert("Registration successful!");
+                    window.location.href = "login.html";
+                } else {
+                    alert(data.message || "Registration failed.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred during registration.");
             });
-
-            input.addEventListener('blur', function() {
-                this.classList.remove('animate_animated', 'animate_pulse');
-            });
-        });
     });
+
 </script>-->
 </body>
 </html>
