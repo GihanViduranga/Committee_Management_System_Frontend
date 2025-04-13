@@ -1215,7 +1215,58 @@
             background-color: #4CAF50;
         }
 
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+        }
 
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 15px;
+            color: #333;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+            opacity: 0.7;
+        }
+
+        /* Error state */
+        .form-group.error input {
+            border-color: #dc3545;
+        }
+
+        .form-group.error .input-icon {
+            color: #dc3545;
+        }
+
+        /* Success state */
+        .form-group.success input {
+            border-color: #28a745;
+        }
+
+        .form-group.success .input-icon {
+            color: #28a745;
+        }
 
         /* Modal Styles */
         .modal {
@@ -1269,6 +1320,8 @@
         }
 
         .close-modal {
+            width: 50px;
+            height: 50px;
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.7);
@@ -1410,7 +1463,10 @@
                 <span>Membership Fee</span>
             </a>
 
-            <a href="#" class=" forgot-link">Change password</a>
+            <a href="#" class="animate__animated animate__fadeInLeft animate-delay-1 forgot-link">
+                <i class="fas fa-cog"></i>
+                <span>Change password</span>
+            </a>
 
 
         </div>
@@ -1547,7 +1603,7 @@
 
     <!-- Welcome Card -->
     <div class="welcome-card animate__animated animate__fadeIn">
-        <h2>Welcome back, John!</h2>
+        <h2>Welcome back, <span id="profileName">User</span>!</h2>
         <p>Your membership is active. Here's your personalized dashboard for April 13, 2025.</p>
     </div>
 
@@ -1678,7 +1734,77 @@
 <script src="js/controller/forget.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+<script>
+    // Function to set the profile name from user data
+    function setProfileName() {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            document.getElementById("profileName").textContent = "User";
+            return;
+        }
 
+        // Option 1: Extract name from token if available
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const payload = JSON.parse(atob(base64));
+
+            // If name is directly in the token
+            if (payload.name || payload.fullName) {
+                document.getElementById("profileName").textContent = payload.name || payload.fullName;
+                return;
+            }
+
+            // If we need to fetch using the email in the token
+            const email = payload.email || payload.sub;
+            if (email) {
+                fetchUser(email, token);
+            }
+        } catch (error) {
+            console.error("Error parsing token:", error);
+            document.getElementById("profileName").textContent = "User";
+        }
+    }
+
+    // Function to fetch user profile data from API
+    function fetchUser(email, token) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/User/getUserByEmail/${email}`,
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function(res) {
+                console.log("Response:", res);
+
+                // Check for code 200 and data object with fullName
+                if (res.code === 200 && res.data && res.data.fullName) {
+                    document.getElementById("profileName").textContent = res.data.fullName;
+                    console.log("Setting profile name to:", res.data.fullName);
+                }
+                // Also check if the data is directly in the response
+                else if (res.fullName) {
+                    document.getElementById("profileName").textContent = res.fullName;
+                    console.log("Setting profile name to (direct):", res.fullName);
+                }
+                // If we can't find a name, use a default value
+                else {
+                    console.warn("Could not find user name in response:", res);
+                    document.getElementById("profileName").textContent = "User";
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching user profile:", error);
+                // Keep default "User" text
+            }
+        });
+    }
+
+    // Call the function when the page loads
+    $(document).ready(function() {
+        setProfileName();
+    });
+</script>
 
 </body>
 </html>
