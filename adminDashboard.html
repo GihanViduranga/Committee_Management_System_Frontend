@@ -42,14 +42,14 @@
 
         /* Dark Theme Variables */
         [data-theme="dark"] {
-            --primary-color: #4cc9f0;
-            --secondary-color: #4895ef;
+            --primary-color: #1c4252;
+            --secondary-color: #003262;
             --accent-color: #3f37c9;
-            --light-color: #252733;
-            --dark-color: #f7f7f9;
-            --text-color: #f7f7f9;
-            --text-muted: #a4a6b3;
-            --border-color: #393e46;
+            --light-color: #242424;
+            --dark-color: #000000;
+            --text-color: #ffffff;
+            --text-muted: #2d2d2d;
+            --border-color: #000000;
             --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
@@ -659,7 +659,16 @@
             animation: fadeIn 0.5s ease-in-out;
         }
 
-        [data-theme="dark"] .form-container {
+        [data-theme="dark"] .form-container .card {
+            background: var(--dark-color);
+
+        }
+
+        [data-theme="dark"] .cards{
+            background: var(--dark-color);
+        }
+
+        [data-theme="dark"] .card{
             background: var(--dark-color);
         }
 
@@ -1409,27 +1418,27 @@
         <div class="home-content" id="home">
             <div class="overview-boxes">
                 <div class="box">
-                    <div class="box-topic">Total Orders</div>
+                    <div class="box-topic">Total Users</div>
                     <div class="number">128</div>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
-                        <span>Up 15% from last month</span>
+                        <span>All users in this system</span>
                     </div>
                 </div>
                 <div class="box">
-                    <div class="box-topic">Total Sales</div>
-                    <div class="number">$12,548</div>
+                    <div class="box-topic">Total Members</div>
+                    <div class="number">48</div>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
-                        <span>Up 22% from last month</span>
+                        <span>All Member in this system</span>
                     </div>
                 </div>
                 <div class="box">
-                    <div class="box-topic">Total Users</div>
+                    <div class="box-topic">Total Active Users</div>
                     <div class="number">543</div>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
-                        <span>Up 8% from last month</span>
+                        <span>All Active users in this system</span>
                     </div>
                 </div>
                 <div class="box">
@@ -1868,8 +1877,8 @@
             <!--Event Facility-->
             <div class="cardss table-container"  id="eventFac">
                 <div class="card ">
-                    <h3 class="card-title card-header" style="text-align: center; color: var(--primary-black);">Event Facility Form</h3>
-                    <div class="form-container">
+                    <h3 class="card-title text-center card-header" style="text-align: center; color: var(--primary-black);">Event Facility Form</h3>
+                    <div class="form-container card">
                         <form action="#" id="eventFaci" method="POST">
                             <div class="form-group">
                                 <label for="facilityName" class="form-label">Facility Name</label>
