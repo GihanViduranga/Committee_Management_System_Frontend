@@ -1629,7 +1629,7 @@
             <div class="stats-icon blue">
                 <i class="fas fa-clock"></i>
             </div>
-            <h3>3</h3>
+            <h3 id="memberCount">0</h3>
             <p>Members Count Of Committee</p>
         </div>
     </div>
@@ -1642,48 +1642,48 @@
         <fieldset>
             <legend>Basic Information</legend>
 
-            <div>
+            <!--<div>
                 <label for="userId">User ID:</label>
                 <input type="number" id="userId" name="userId" readonly>
-            </div>
+            </div>-->
 
             <div>
                 <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" required>
+                <input type="text" id="fullName" name="fullName" disabled>
             </div>
 
             <div>
                 <label for="birthday">Birthday:</label>
-                <input type="date" id="birthday" name="birthday">
+                <input type="date" id="birthday" name="birthday" disabled>
             </div>
 
             <div>
                 <label for="address">Address:</label>
-                <textarea id="address" name="address" rows="2"></textarea>
+                <textarea id="address" name="address" rows="2" disabled></textarea>
             </div>
 
             <div>
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber">
+                <input type="tel" id="phoneNumber" name="phoneNumber" disabled>
             </div>
 
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" disabled>
             </div>
 
-           <!-- <div>
+            <!--<div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>-->
-            <div>
+            <!--<div>
                 <label for="password">Password:</label>
-                <input type="text" id="password" name="password" required> <!-- Changed to 'text' to preview password -->
-            </div>
+                <input type="text" id="password" name="password" required> &lt;!&ndash; Changed to 'text' to preview password &ndash;&gt;
+            </div>-->
 
             <div>
-                <label for="image">Image</label>
-                <input type="file" id="image" name="image">
+                <label for>Image</label>
+                <!--<input type="file" id="image" name="image">-->
                 <!-- Preview container (initially hidden) -->
                 <div id="imagePreviewContainer" style="margin-top: 10px; display: none;">
                     <img id="imagePreview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 5px; border: 1px solid #ddd;">
@@ -1699,7 +1699,7 @@
                     <option value="NEW_USER">New User</option>
                 </select>
             </div>-->
-            <div>
+            <!--<div>
                 <label for="role">Role:</label>
                 <select id="role" name="role" disabled>
                     <option value="ADMIN">Admin</option>
@@ -1715,16 +1715,18 @@
 
             <div>
                 <h6>Only Admin can change Role and Status</h6>
-            </div>
+            </div>-->
         </fieldset>
 
 
-        <button type="button" id="updateBtn">Update</button>
+        <!--<button type="button" id="updateBtn">Update</button>
 
-        <!-- jQuery and bcrypt.js must be loaded -->
+        &lt;!&ndash; jQuery and bcrypt.js must be loaded &ndash;&gt;
 
-        <button type="button" id="clearBtn">Clear Form</button>
+        <button type="button" id="clearBtn">Clear Form</button>-->
     </form>
+
+
 </div>
 
 <script src="js/jquery-3.7.1.min.js"></script>
@@ -1732,8 +1734,10 @@
 <script src="js/controller/profile.js"></script>
 <script src="js/controller/memberProfileUpdate.js"></script>
 <script src="js/controller/forget.js"></script>
+<script src="js/controller/notifications.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+
 <script>
     // Function to set the profile name from user data
     function setProfileName() {

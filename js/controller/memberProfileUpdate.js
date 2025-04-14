@@ -84,7 +84,7 @@ function updateUser() {
         phoneNumber: $("#phoneNumber").val(),
         address: $("#address").val(),
         birthday: $("#birthday").val(),
-        isActive: $("#isActive").is(":checked")
+        isActive: $("#isActive").val(true)
     };
 
     const password = $("#password").val();
