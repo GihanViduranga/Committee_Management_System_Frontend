@@ -61,7 +61,7 @@ document.getElementById("register").addEventListener('click', function(event) {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         Swal.fire("Saved!", "", "success");
-                        window.location.href = "memberDashboard.html";
+                        window.location.href = "memberRegister.html";
                     } else if (result.isDenied) {
                         Swal.fire("Changes are saved but Not a Member", "", "info");
                         window.location.href = "login.html";

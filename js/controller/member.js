@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const API_BASE_URL = 'http://localhost:8080/api/v1/member';
     const memberTableBody = document.getElementById('memberTableBody');
-    const countElement = document.getElementById('memberCount');
+    const countElement = document.getElementById('memberCounts');
     let currentMembers = [];
 
     // Get auth token from localStorage

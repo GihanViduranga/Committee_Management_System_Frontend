@@ -184,6 +184,10 @@
             }
         }
 
+        ul{
+            padding-left: 0;
+        }
+
         /* Home Section Styling */
         .home-section {
             position: relative;
@@ -1372,6 +1376,7 @@
         <li><a id="employeePage" href="#"><i id="employeeIcon" class='bx bx-package'></i><span id="employeeName" class="links_name">Event Types</span></a></li>
         <li><a id="attendPage" href="#"><i id="attendsIcon" class='bx bx-book-alt'></i><span id="attendName" class="links_name">Meeting Attend</span></a></li>
         <li><a id="eventPage" href="#"><i id="eventIcon" class='bx bx-book-alt'></i><span id="eventName" class="links_name">Event Participation</span></a></li>
+        <li class="memberDash"><a href="memberDashboard.html"><i class='bx bx-log-in'></i><span class="links_name">Member Dashboard</span></a></li>
         <li class="log_out"><a href="index.html"><i class='bx bx-log-out'></i><span class="links_name">Log out</span></a></li>
     </ul>
 </div>
@@ -1419,7 +1424,7 @@
             <div class="overview-boxes">
                 <div class="box">
                     <div class="box-topic">Total Users</div>
-                    <div class="number">128</div>
+                    <h3 class="number" id="userCount">Loading...</h3>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
                         <span>All users in this system</span>
@@ -1427,7 +1432,7 @@
                 </div>
                 <div class="box">
                     <div class="box-topic">Total Members</div>
-                    <div class="number">48</div>
+                    <h3 class="number" id="memberCount">Loading...</h3>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
                         <span>All Member in this system</span>
@@ -1435,18 +1440,17 @@
                 </div>
                 <div class="box">
                     <div class="box-topic">Total Active Users</div>
-                    <div class="number">543</div>
+                    <h3 class="number" id="userActiveCount">Loading...</h3>
                     <div class="indicator up">
                         <i class='bx bx-up-arrow-alt'></i>
                         <span>All Active users in this system</span>
                     </div>
                 </div>
                 <div class="box">
-                    <div class="box-topic">Total Products</div>
-                    <div class="number">87</div>
-                    <div class="indicator down">
-                        <i class='bx bx-down-arrow-alt'></i>
-                        <span>Down 2% from last month</span>
+                    <div class="box-topic">Total Meetings</div>
+                    <h3 class="number" id="meetingCount">Loading...</h3>
+                    <div class="indicator up">
+                        <span>Total Meetings</span>
                     </div>
                 </div>
             </div>
@@ -1618,7 +1622,7 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Total Members</h5>
-                        <span class="badge bg-primary count-badge" id="memberCount">0</span>
+                        <span class="badge bg-primary count-badge" id="memberCounts">0</span>
                     </div>
                 </div>
 
@@ -2107,6 +2111,9 @@
             </div>
         </div>
 
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -2124,6 +2131,7 @@
 <script src="js/controller/profile.js"></script>
 <script src="js/controller/eventParticipation.js"></script>
 <script src="js/controller/eventCreate.js"></script>
+<script src="js/controller/notifications.js"></script>
 
 <script>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="resources/images/LogoBGRemove.png" type="image/x-icon">
     <title>Member Dashboard</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,14 +19,18 @@
             --primary-light: #818cf8;
             --primary-dark: #4f46e5;
             --secondary-color: #f8f9fc;
-            --text-color: #334155;
             --text-light: #64748b;
             --bg-color: #f1f5f9;
             --card-bg: #ffffff;
             --sidebar-bg: #ffffff;
             --navbar-bg: #ffffff;
-            --border-color: #e2e8f0;
             --hover-color: #f8fafc;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -841,7 +846,7 @@
         }
 
         /* User Form Styling */
-        #userForm {
+        .userForm {
             background-color: var(--card-bg);
             border-radius: 15px;
             box-shadow: var(--shadow-sm);
@@ -850,39 +855,39 @@
             transition: var(--transition);
         }
 
-        #userForm:hover {
+        .userForm:hover {
             box-shadow: var(--shadow);
             transform: translateY(-5px);
         }
 
-        #userForm fieldset {
+        .userForm fieldset {
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
-        #userForm legend {
+        .userForm legend {
             color: var(--primary-color);
             font-weight: 600;
             font-size: 1.1rem;
             padding: 0 10px;
         }
 
-        #userForm div {
+        .userForm div {
             margin-bottom: 15px;
         }
 
-        #userForm label {
+        .userForm label {
             display: block;
             font-weight: 500;
             margin-bottom: 8px;
             color: var(--text-color);
         }
 
-        #userForm input,
-        #userForm textarea,
-        #userForm select {
+        .userForm input,
+        .userForm textarea,
+        .userForm select {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid var(--border-color);
@@ -894,26 +899,26 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        #userForm input[type="checkbox"] {
+        .userForm input[type="checkbox"] {
             width: auto;
             margin-left: 10px;
             transform: scale(1.2);
         }
 
-        #userForm input:focus,
-        #userForm textarea:focus,
-        #userForm select:focus {
+        .userForm input:focus,
+        .userForm textarea:focus,
+        .userForm select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
             outline: none;
         }
 
-        #userForm input:read-only {
+        .userForm input:read-only {
             background-color: var(--hover-color);
             cursor: not-allowed;
         }
 
-        #userForm button {
+        .userForm button {
             cursor: pointer;
             padding: 12px 25px;
             border-radius: 10px;
@@ -922,26 +927,26 @@
             margin-right: 10px;
         }
 
-        #userForm button[type="submit"] {
+        .userForm button[type="submit"] {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
             box-shadow: var(--shadow-sm);
         }
 
-        #userForm button[type="submit"]:hover {
+        .userForm button[type="submit"]:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow);
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
         }
 
-        #userForm button[type="button"] {
+        .userForm button[type="button"] {
             border: 1px solid var(--border-color);
             background-color: var(--card-bg);
             color: var(--text-color);
         }
 
-        #userForm button[type="button"]:hover {
+        .userForm button[type="button"]:hover {
             background-color: var(--hover-color);
         }
 
@@ -1017,12 +1022,12 @@
         }
 
         /* Checkbox label alignment */
-        #userForm div:has(input[type="checkbox"]) {
+        .userForm div:has(input[type="checkbox"]) {
             display: flex;
             align-items: center;
         }
 
-        #userForm div:has(input[type="checkbox"]) label {
+        .userForm div:has(input[type="checkbox"]) label {
             margin-bottom: 0;
             flex-grow: 1;
         }
@@ -1428,8 +1433,6 @@
             font-size: 14px;
             margin-top: 10px;
         }
-
-
     </style>
 </head>
 <body>
@@ -1443,7 +1446,7 @@
     </div>
 
     <div class="sidebar-user profile-details">
-        <div class="user-avatar"><img id="profilePic" src="resources/images/LogoBGRemove.png" alt="profile"></div>
+        <div class="user-avatar"><img id="profilePic" src="resources/images/" alt="profile"></div>
         <span class="admin_name" id="admin1Name">Loading...</span>
     </div>
 
@@ -1621,15 +1624,15 @@
             <div class="stats-icon blue">
                 <i class="fas fa-clock"></i>
             </div>
-            <h3>3</h3>
-            <p>Pending Meetings</p>
+            <h3 id="meetingCount">Loading...</h3>
+            <p>Meetings</p>
         </div>
 
         <div class="stats-card animate__animated animate__fadeInUp animate-delay-1">
             <div class="stats-icon blue">
                 <i class="fas fa-clock"></i>
             </div>
-            <h3 id="memberCount">0</h3>
+            <h3 id="memberCount">Loading...</h3>
             <p>Members Count Of Committee</p>
         </div>
     </div>
@@ -1638,15 +1641,9 @@
     <h1>User Details</h1>
 
     <!-- User Information Form -->
-    <form id="userForm">
+    <form class="userForm">
         <fieldset>
             <legend>Basic Information</legend>
-
-            <!--<div>
-                <label for="userId">User ID:</label>
-                <input type="number" id="userId" name="userId" readonly>
-            </div>-->
-
             <div>
                 <label for="fullName">Full Name:</label>
                 <input type="text" id="fullName" name="fullName" disabled>
@@ -1672,15 +1669,6 @@
                 <input type="email" id="email" name="email" disabled>
             </div>
 
-            <!--<div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>-->
-            <!--<div>
-                <label for="password">Password:</label>
-                <input type="text" id="password" name="password" required> &lt;!&ndash; Changed to 'text' to preview password &ndash;&gt;
-            </div>-->
-
             <div>
                 <label for>Image</label>
                 <!--<input type="file" id="image" name="image">-->
@@ -1689,44 +1677,56 @@
                     <img id="imagePreview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 5px; border: 1px solid #ddd;">
                 </div>
             </div>
-
-           <!-- <div>
-                <label for="role">Role:</label>
-                <select id="role" name="role" disabled>
-                    <option value="">Admin Only</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="USER">User</option>
-                    <option value="NEW_USER">New User</option>
-                </select>
-            </div>-->
-            <!--<div>
-                <label for="role">Role:</label>
-                <select id="role" name="role" disabled>
-                    <option value="ADMIN">Admin</option>
-                    <option value="USER">User</option>
-                    <option value="NEW_USER">New User</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="isActive">Active Status:</label>
-                <input type="checkbox" id="isActive" name="isActive" disabled>
-            </div>
-
-            <div>
-                <h6>Only Admin can change Role and Status</h6>
-            </div>-->
         </fieldset>
-
-
-        <!--<button type="button" id="updateBtn">Update</button>
-
-        &lt;!&ndash; jQuery and bcrypt.js must be loaded &ndash;&gt;
-
-        <button type="button" id="clearBtn">Clear Form</button>-->
     </form>
 
+</div>
+<div class="user-details-container" id="memberFee">
+        <div class="form-container">
+            <h1><i class="fas fa-money-bill-wave"></i> Member Fee Payment</h1>
 
+            <form id="memberFeeForm" class="userForm">
+                <div class="form-group">
+                    <label for="PaymentDescription">Description</label>
+                    <textarea id="PaymentDescription" name="description" placeholder="Enter payment description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Payment Date</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="" disabled selected>Select payment method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Amount</label>
+                    <div class="price-input-container">
+                        <span class="currency-symbol">Rs.</span>
+                        <input type="text" id="price" name="price" placeholder="Enter amount" required>
+                    </div>
+                </div>
+
+                <!--<h2>User Information</h2>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>-->
+
+                <div class="buttons" >
+                    <button type="button" id="savePayment" class="btn btn-primary" style="width: 200px">Submit Payment</button>
+                    <button type="reset" class="btn btn-secondary" style="width: 200px">Reset</button>
+                </div>
+            </form>
+        </div>
 </div>
 
 <script src="js/jquery-3.7.1.min.js"></script>
@@ -1735,6 +1735,8 @@
 <script src="js/controller/memberProfileUpdate.js"></script>
 <script src="js/controller/forget.js"></script>
 <script src="js/controller/notifications.js"></script>
+<script src="js/controller/memberFee.js"></script>
+<!--<script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
 

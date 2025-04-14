@@ -1,3 +1,4 @@
+/*
 // Main navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Get navigation links
@@ -5,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileLink = document.getElementById('updateProfile');
     const membershipFeeLink = document.getElementById('membershipFee');
 
-    // Get content sections
+// Get content sections
     const mainContent = document.getElementById('mainContent');
     const memberDetails = document.getElementById('memberDetails');
-    const memberFee = document.getElementById('memberFee');
+    const memberFeeContent = document.getElementById('memberFee');
 
     // Initially hide memberDetails section
     if (memberDetails) {
@@ -16,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initially hide memberFee section
-    if (memberFee) {
-        memberFee.style.display = 'none';
+    if (memberFeeContent) {
+        memberFeeContent.style.display = 'none';
     }
 
     // Handle dashboard link click
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show main content, hide other sections
         mainContent.style.display = 'block';
         if (memberDetails) memberDetails.style.display = 'none';
-        if (memberFee) memberFee.style.display = 'none';
+        if (memberFeeContent) memberFeeContent.style.display = 'none';
     });
 
     // Handle profile link click
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show member details, hide other sections
         mainContent.style.display = 'none';
         if (memberDetails) memberDetails.style.display = 'block';
-        if (memberFee) memberFee.style.display = 'none';
+        if (memberFeeContent) memberFeeContent.style.display = 'none';
     });
 
     // Handle membership fee link click
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show membership fee, hide other sections
         mainContent.style.display = 'none';
         if (memberDetails) memberDetails.style.display = 'none';
-        if (memberFee) memberFee.style.display = 'block';
+        if (memberFeeContent) memberFeeContent.style.display = 'block';
     });
 
     // Function to set active nav link
@@ -70,7 +71,57 @@ document.addEventListener('DOMContentLoaded', function() {
         activeLink.classList.add('active');
     }
 });
+*/
 
+// Main navigation functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const dashboardLink = document.getElementById('dashboard');
+    const profileLink = document.getElementById('updateProfile');
+    const membershipFeeLink = document.getElementById('membershipFee');
+
+    const mainContent = document.getElementById('mainContent');
+    const memberDetails = document.getElementById('memberDetails');
+    const memberFee = document.getElementById('memberFee');
+
+    // Set initial state
+    mainContent.style.display = 'block';
+    memberDetails.style.display = 'none';
+    memberFee.style.display = 'none';
+    dashboardLink.classList.add('active');
+
+    // Navigation click handlers
+    dashboardLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchSection(mainContent, dashboardLink);
+    });
+
+    profileLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchSection(memberDetails, profileLink);
+    });
+
+    membershipFeeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchSection(memberFee, membershipFeeLink);
+    });
+
+    function switchSection(sectionToShow, linkToActivate) {
+        // Hide all sections
+        [mainContent, memberDetails, memberFee].forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Remove active class from all links
+        [dashboardLink, profileLink, membershipFeeLink].forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Show selected section and activate link
+        sectionToShow.style.display = 'block';
+        linkToActivate.classList.add('active');
+    }
+});
 // Member form functionality
 /*function initMemberForm() {
     const memberForm = document.getElementById('memberForm');

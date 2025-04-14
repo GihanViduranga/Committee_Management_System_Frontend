@@ -129,9 +129,11 @@ document.getElementById("LoginBtn").addEventListener("click", function (event) {
                             Swal.fire({
                                 icon: "error",
                                 title: "Account Inactive",
-                                text: "Your account is not active. Please contact support."
+                                text: "Your account is not active. Please contact support.",
+                            }).then(() => {
+                                localStorage.removeItem("authToken"); // Clear the token if account is inactive
+                                window.location.href = "index.html"; // Redirect after alert is closed
                             });
-                            localStorage.removeItem("authToken"); // Clear the token if account is inactive
                             return;
                         }
 
@@ -144,7 +146,7 @@ document.getElementById("LoginBtn").addEventListener("click", function (event) {
                                 window.location.href = "adminDashboard.html";
                                 Swal.fire("Login Success....!");
                                 break;
-                            case "USER":
+                            case "MEMBER" || "ADMIN":
                                 window.location.href = "memberDashboard.html";
                                 Swal.fire("Login Success....!");
                                 break;
