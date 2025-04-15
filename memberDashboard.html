@@ -1433,6 +1433,146 @@
             font-size: 14px;
             margin-top: 10px;
         }
+
+        /* Meeting Table Container */
+        #meeting {
+            margin-left: 260px;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Meeting Table Styles */
+        .meeting-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .meeting-header {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .meeting-header th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .meeting-body {
+            background-color: var(--card-bg);
+        }
+
+        .meeting-body tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .meeting-body tr:last-child {
+            border-bottom: none;
+        }
+
+        .meeting-body tr:hover {
+            background-color: var(--hover-color);
+        }
+
+        .meeting-body td {
+            padding: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* Column-specific styles */
+        .meeting-id {
+            width: 10%;
+            font-weight: 600;
+        }
+
+        .meeting-title {
+            width: 20%;
+        }
+
+        .meeting-date {
+            width: 15%;
+        }
+
+        .meeting-time {
+            width: 15%;
+        }
+
+        .meeting-desc {
+            width: 40%;
+            color: var(--text-light);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            #meeting {
+                margin-left: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #meeting {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .table-container {
+                padding: 10px;
+            }
+
+            .meeting-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .meeting-header th {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+
+            .meeting-body td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .meeting-header th,
+            .meeting-body td {
+                padding: 10px 5px;
+                font-size: 0.8rem;
+            }
+
+            .meeting-id {
+                width: 15%;
+            }
+
+            .meeting-title {
+                width: 25%;
+            }
+
+            .meeting-date,
+            .meeting-time {
+                width: 20%;
+            }
+
+            .meeting-desc {
+                display: none; /* Hide description on very small screens */
+            }
+        }
     </style>
 </head>
 <body>
@@ -1460,6 +1600,10 @@
             <a href="#" id="updateProfile" class="animate__animated animate__fadeInLeft animate-delay-1">
                 <i class="fas fa-user-edit"></i>
                 <span>Profile</span>
+            </a>
+            <a href="#" id="MeetingTbl" class="animate__animated animate__fadeInLeft animate-delay-1">
+                <i class="fas fa-user-edit"></i>
+                <span>Meeting</span>
             </a>
             <a href="#" id="membershipFee" class="animate__animated animate__fadeInLeft animate-delay-1">
                 <i class="fas fa-credit-card"></i>
@@ -1725,10 +1869,32 @@
                     <button type="button" id="savePayment" class="btn btn-primary" style="width: 200px">Submit Payment</button>
                     <button type="reset" class="btn btn-secondary" style="width: 200px">Reset</button>
                 </div>
+                <div style="padding: 20px; text-align: center;">
+                    <button id="memberPayButton" class="pay-button">Member Pay</button>
+                </div>
             </form>
         </div>
 </div>
 
+<div class="user-details-container" id="meeting">
+    <div class="table-container">
+        <table class="meeting-table">
+            <thead class="meeting-header">
+            <tr>
+                <th class="meeting-id">Meeting ID</th>
+                <th class="meeting-title">Title</th>
+                <th class="meeting-date">Date</th>
+                <th class="meeting-time">Time</th>
+                <th class="meeting-desc">Description</th>
+            </tr>
+            </thead>
+            <tbody id="meetingTable" class="meeting-body">
+            <!-- More rows dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/controller/memberDashboard.js"></script>
 <script src="js/controller/profile.js"></script>
@@ -1736,10 +1902,54 @@
 <script src="js/controller/forget.js"></script>
 <script src="js/controller/notifications.js"></script>
 <script src="js/controller/memberFee.js"></script>
+<script src="js/controller/memberMeeting.js"></script>
 <!--<script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
 
+<script>
+    // Add event listener to the Member Pay button
+    document.getElementById("memberPayButton").addEventListener("click", function() {
+        // Call the function to process payment
+        processMemberPayment();
+    });
+
+    // Function to process payment with PayHere
+    function processMemberPayment() {
+        // Payment object
+        const payment = {
+            sandbox: true, // Set to false in production
+            merchant_id: "1230106", // Replace with your actual Payhere merchant ID
+            return_url: window.location.origin + "/payment-success",
+            cancel_url: window.location.origin + "/payment-cancelled",
+            notify_url: "http://localhost:8080/api/v1/payment/payhere", // Replace with your actual API endpoint
+            order_id: "MEMBER_" + Math.floor(Math.random() * 1000000), // Generate unique order ID
+            items: "Membership Payment",
+            amount: "1000.00", // Set your membership fee amount
+            currency: "LKR",
+            first_name: "", // You can set default values or leave empty
+            last_name: "",
+            email: "",
+            phone: "",
+            address: "",
+            city: "",
+            country: "Sri Lanka",
+            delivery_address: "",
+            delivery_city: "",
+            delivery_country: "Sri Lanka",
+            custom_1: "membership_payment",
+            custom_2: ""
+        };
+
+        // Show the payhere.js popup
+        if (typeof payhere !== 'undefined') {
+            payhere.startPayment(payment);
+        } else {
+            console.error("Payhere.js is not loaded. Make sure to include the script in your HTML.");
+            alert("Payment system is not available. Please try again later.");
+        }
+    }
+</script>
 <script>
     // Function to set the profile name from user data
     function setProfileName() {

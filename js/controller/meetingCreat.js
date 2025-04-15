@@ -140,6 +140,7 @@ $(document).ready(function() {
             data: JSON.stringify(payload),
             success: function(response) {
                 console.log("Save response:", response);
+                loadMeetings();
 
                 if (response.code === "00") {
                     $("#meetingTitle, #meetingDate, #meetingTime, #descriptions").val("");
