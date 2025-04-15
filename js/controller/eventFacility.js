@@ -41,8 +41,10 @@ $("#SaveFacility").off("click").on("click", function(e) {
         },
         data: JSON.stringify(payload),
         success: function(data, textStatus, xhr) {
+
             // Check the response code from your backend
             if (data.code === "00") {
+                getAllEventFacilities();
                 alert(data.message || "Facility saved successfully!");
                 $("#facilityName").val("");
                 $("#FacilityDescriptions").val("");
@@ -246,3 +248,5 @@ $("#UpdateFacility").on("click", function () {
 
 // Load facilities on page load
 $(document).ready(getAllEventFacilities);
+
+getAllEventFacilities();
